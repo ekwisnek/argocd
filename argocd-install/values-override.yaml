@@ -9,6 +9,31 @@ configs:
       type: helm
       url: https://argoproj.github.io/argo-helm
 extraObjects:
+  - apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+      name: argocd-server-ingress
+      namespace: argocd
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt
+        kubernetes.io/tls-acme: "true"
+    spec:
+      ingressClassName: "traefik"
+      rules:
+        - host: argocd.ctrlplane.net
+          http:
+            paths:
+              - path: /
+                pathType: Prefix
+                backend:
+                  service:
+                    name: argocd-server
+                    port:
+                      name: https
+      tls:
+        - hosts:
+            - argocd.ctrlplane.net
+          secretName: argocd-ui-tls
   - apiVersion: argoproj.io/v1alpha1
     kind: AppProject
     metadata:
