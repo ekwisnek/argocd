@@ -16,11 +16,11 @@ spec:
           disableAutoApproval: false
           webhook:
             featureGates: "AdditionalCertificateOutputFormats=true"
-    - repoURL: "https://github.com/ekwisnek/argocd.git"
-      targetRevision: HEAD
-      path: "argocd-apps/core/cert-manager"
-      directory:
-        exclude: cert-manager-app.yaml
+    # - repoURL: "https://github.com/ekwisnek/argocd.git"
+    #   targetRevision: HEAD
+    #   path: "argocd-apps/core/cert-manager"
+    #   directory:
+    #     exclude: cert-manager-app.yaml
   destination:
     server: "https://kubernetes.default.svc"
     namespace: cert-manager
