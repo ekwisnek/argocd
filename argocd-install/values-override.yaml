@@ -17,13 +17,13 @@ extraObjects:
     spec:
       description: Argocd Project
       sourceRepos:
-      - '*'
+        - '*'
       destinations:
-      - namespace: argocd
-        server: https://kubernetes.default.svc
+        - namespace: argocd
+          server: https://kubernetes.default.svc
       clusterResourceWhitelist:
-      - group: '*'
-        kind: '*'
+        - group: '*'
+          kind: '*'
       orphanedResources:
         warn: false
   - apiVersion: argoproj.io/v1alpha1
@@ -39,7 +39,7 @@ extraObjects:
       sources:
         - helm:
             valueFiles:
-            - $values/argocd-install/values-override.yaml
+              - $values/argocd-install/values-override.yaml
           repoURL: https://argoproj.github.io/argo-helm
           targetRevision: 8.1.2
           chart: argo-cd
@@ -47,7 +47,7 @@ extraObjects:
           ref: values
       syncPolicy:
         syncOptions:
-        - CreateNamespace=true
+          - CreateNamespace=true
   - apiVersion: argoproj.io/v1alpha1
     kind: Application
     metadata:
