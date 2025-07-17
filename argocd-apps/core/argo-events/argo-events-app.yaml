@@ -24,7 +24,7 @@ spec:
                   persistence:
                     volumeSize: 2Gi
       repoURL: https://argoproj.github.io/argo-helm
-      targetRevision: v1.9.7
+      targetRevision: 2.4.16
       chart: argo-events
   syncPolicy:
     automated:
