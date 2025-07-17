@@ -18,7 +18,7 @@ spec:
             featureGates: "AdditionalCertificateOutputFormats=true"
     - repoURL: "https://github.com/ekwisnek/argocd.git"
       targetRevision: HEAD
-      path: "argocd-apps/apps/cert-manager"
+      path: "argocd-apps/core/cert-manager"
       directory:
         exclude: cert-manager-app.yaml
   destination:
