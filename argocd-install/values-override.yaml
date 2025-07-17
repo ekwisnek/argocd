@@ -1,15 +1,37 @@
-server:
-  configEnabled: true
-  config:
-    repositories: |
-      - type: git
-        url: https://github.com/ekwisnek/argocd.git
-      - name: argo-helm
-        type: helm
-        url: https://argoproj.github.io/argo-helm
-  additionalApplications: 
-    - name: argocd
+configs:
+  repositories:
+    ekwisnek-github:
+      name: ekwisnek-github
+      type: git
+      url: https://github.com/ekwisnek/argocd.git
+    argo-helm:
+      name: argo-helm
+      type: helm
+      url: https://argoproj.github.io/argo-helm
+extraObjects:
+  - apiVersion: argoproj.io/v1alpha1
+    kind: AppProject
+    metadata:
+      name: argocd
       namespace: argocd
+    spec:
+      description: Argocd Project
+      sourceRepos:
+      - '*'
+      destinations:
+      - namespace: argocd
+        server: https://kubernetes.default.svc
+      clusterResourceWhitelist:
+      - group: '*'
+        kind: '*'
+      orphanedResources:
+        warn: false
+  - apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+      name: argocd
+      namespace: argocd
+    spec:
       destination:
         namespace: argocd
         server: https://kubernetes.default.svc
@@ -26,53 +48,43 @@ server:
       syncPolicy:
         syncOptions:
         - CreateNamespace=true
-    - name: argocd-apps
+  - apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+      name: argocd-apps
       namespace: argocd
+    spec:
       destination:
         namespace: argocd
         server: https://kubernetes.default.svc
       project: argocd
-      source:
-        path: argocd-apps
-        repoURL: https://github.com/ekwisnek/argocd.git
-        targetRevision: HEAD
-        directory:
-          recurse: true
-          jsonnet: {}
+      sources:
+        - repoURL: https://github.com/ekwisnek/argocd.git
+          targetRevision: HEAD
+          path: argocd-apps
+          directory:
+            recurse: true
       syncPolicy:
         automated:
           selfHeal: true
           prune: true
-    - name: argocd-appprojects
+  - apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+      name: argocd-appprojects
       namespace: argocd
+    spec:
       destination:
         namespace: argocd
         server: https://kubernetes.default.svc
       project: argocd
-      source:
-        path: argocd-appprojects
-        repoURL: https://github.com/ekwisnek/argocd.git
-        targetRevision: HEAD
-        directory:
-          recurse: true
-          jsonnet: {}
+      sources:
+        - path: argocd-appprojects
+          repoURL: https://github.com/ekwisnek/argocd.git
+          targetRevision: HEAD
+          directory:
+            recurse: true
       syncPolicy:
         automated:
           selfHeal: true
           prune: true
-  additionalProjects: 
-  - name: argocd
-    namespace: argocd
-    additionalLabels: {}
-    additionalAnnotations: {}
-    description: Argocd Project
-    sourceRepos:
-    - '*'
-    destinations:
-    - namespace: argocd
-      server: https://kubernetes.default.svc
-    clusterResourceWhitelist:
-    - group: '*'
-      kind: '*'
-    orphanedResources:
-      warn: false
