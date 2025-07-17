@@ -8,7 +8,7 @@ spec:
   project: argocd
   sources:
     - repoURL: "https://charts.jetstack.io"
-      targetRevision: v1.17.0
+      targetRevision: v1.18.2
       chart: cert-manager
       helm:
         valuesObject:
@@ -16,11 +16,28 @@ spec:
           disableAutoApproval: false
           webhook:
             featureGates: "AdditionalCertificateOutputFormats=true"
-    # - repoURL: "https://github.com/ekwisnek/argocd.git"
-    #   targetRevision: HEAD
-    #   path: "argocd-apps/core/cert-manager"
-    #   directory:
-    #     exclude: cert-manager-app.yaml
+          crds:
+            enable: true
+          extraObjects:
+            - apiVersion: cert-manager.io/v1
+              kind: ClusterIssuer
+              metadata:
+                name: letsencrypt
+                annotations:
+                  argocd.argoproj.io/hook: PostSync
+              spec:
+                acme:
+                  email: evankwisnek@gmail.com
+                  server: https://acme-v02.api.letsencrypt.org/directory
+                  privateKeySecretRef:
+                    name: letsencrypt-issuer-key
+                  solvers:
+                    - dns01:
+                        cloudflare:
+                          email: evankwisnek@gmail.com
+                          apiKeySecretRef:
+                            name: cloudflare-api-token-secret
+                            key: api-token
   destination:
     server: "https://kubernetes.default.svc"
     namespace: cert-manager
