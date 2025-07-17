@@ -1,0 +1,30 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: argocd
+spec:
+  project: argocd
+  sources:
+    - repoURL: "https://charts.jetstack.io"
+      targetRevision: v1.17.0
+      chart: cert-manager
+      helm:
+        valuesObject:
+          featureGates: "AdditionalCertificateOutputFormats=true"
+          disableAutoApproval: false
+          webhook:
+            featureGates: "AdditionalCertificateOutputFormats=true"
+    - repoURL: "https://github.com/ekwisnek/argocd.git"
+      targetRevision: HEAD
+      path: "argocd-apps/apps/cert-manager"
+      directory:
+        exclude: cert-manager-app.yaml
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: cert-manager
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
