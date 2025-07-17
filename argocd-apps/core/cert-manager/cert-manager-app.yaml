@@ -17,7 +17,7 @@ spec:
           webhook:
             featureGates: "AdditionalCertificateOutputFormats=true"
           crds:
-            enable: true
+            enabled: true
           extraObjects:
             - apiVersion: cert-manager.io/v1
               kind: ClusterIssuer
