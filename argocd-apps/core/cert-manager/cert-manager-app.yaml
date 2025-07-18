@@ -18,7 +18,7 @@ spec:
             featureGates: "AdditionalCertificateOutputFormats=true"
           crds:
             enabled: true
-    - repoUrl: "https://github.com/ekwisnek/argocd.git"
+    - repoURL: "https://github.com/ekwisnek/argocd.git"
       targetRevision: HEAD
       path: extra-manifests/cert-manager
   destination:
