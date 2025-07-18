@@ -1,3 +1,18 @@
+controller:
+  metrics:
+    enabled: true
+dex:
+  metrics:
+    enabled: true
+server:
+  metrics:
+    enabled: true
+repoServer:
+  metrics:
+    enabled: true
+applicationSet:
+  metrics:
+    enabled: true
 global:
   domain: argocd.ctrlplane.net
 redis:
