@@ -14,10 +14,10 @@ spec:
           envoy:
             service:
               type: NodePort
-            nodePorts:
-              http: 30080
-              https: 30443
-              metrics: 8002
+              nodePorts:
+                http: 30080
+                https: 30443
+                metrics: 8002
       repoURL: https://charts.bitnami.com/bitnami
       targetRevision: 21.0.10 
       chart: contour
