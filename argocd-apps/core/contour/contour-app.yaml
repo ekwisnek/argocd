@@ -17,10 +17,14 @@ spec:
               nodePorts:
                 http: 30080
                 https: 30443
-                metrics: 8002
       repoURL: https://charts.bitnami.com/bitnami
       targetRevision: 21.0.10 
       chart: contour
+  ignoreDifferences:
+  - group: apiextensions.k8s.io
+    kind: CustomResourceDefinition
+    jsonPointers:
+    - /spec/preserveUnknownFields
   syncPolicy:
     automated:
       prune: true
