@@ -1,0 +1,46 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: coroot-operator
+  namespace: argocd
+spec:
+  project: core-infrastructure
+  sources:
+    - repoURL: "https://coroot.github.io/helm-charts"
+      targetRevision: 0.3.1
+      chart: coroot-ce
+      helm:
+        valuesObject:
+          ingress:
+            className: nginx
+            host: coroot.ctrlplane.net
+            annotations:
+              cert-manager.io/cluster-issuer: letsencrypt
+              kubernetes.io/tls-acme: "true"
+              nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+              nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+            path: /
+            tls:
+              - hosts:
+                - host: coroot.ctrlplane.net
+                secretName: coroot-tls
+          storage:
+            size: 10Gi
+          prometheus:
+            storage:
+              size: 10Gi
+          clickhouse:
+            shards: 2
+            replicas: 2
+            storage:
+              size: 10Gi
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: coroot
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
