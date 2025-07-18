@@ -7,8 +7,10 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
     kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 spec:
-  ingressClassName: "contour"
+  ingressClassName: "nginx"
   rules:
     - host: argocd.ctrlplane.net
       http:
