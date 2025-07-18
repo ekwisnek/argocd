@@ -18,6 +18,9 @@ spec:
             featureGates: "AdditionalCertificateOutputFormats=true"
           crds:
             enabled: true
+    - repoUrl: "https://github.com/ekwisnek/argocd.git"
+      targetRevision: HEAD
+      path: extra-manifests/cert-manager
   destination:
     server: "https://kubernetes.default.svc"
     namespace: cert-manager
