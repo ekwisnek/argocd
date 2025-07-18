@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx-ingress
+  namespace: argocd  # ArgoCD's namespace
+spec:
+  project: core-infrastructure
+  source:
+    repoURL: https://kubernetes.github.io/ingress-nginx
+    targetRevision: 4.13.0
+    chart: ingress-nginx
+    helm:
+      values: |
+        controller:
+          hostNetwork: true
+          allowSnippetAnnotations: true
+          config:
+            use-proxy-protocol: "true"
+          service:
+            enabled: true
+            type: NodePort
+            externalTrafficPolicy: Local
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kube-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
