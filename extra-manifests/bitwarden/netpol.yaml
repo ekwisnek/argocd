@@ -1,25 +1,17 @@
----
-apiVersion: "cilium.io/v2"
-kind: CiliumNetworkPolicy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
 metadata:
-  name: "external-secret-2-bw-cli"
+  name: allow-from-external-secrets
   namespace: bitwarden
 spec:
-  description: "Allow HTTP GET /object from ESO to Bitwarden"
-  endpointSelector:
-    matchLabels:
-      app.kubernetes.io/instance: bitwarden-cli
-      app.kubernetes.io/name: bitwarden-cli
+  podSelector: {}  # Applies to all pods in namespace 'b'
+  policyTypes:
+    - Ingress
   ingress:
-  - fromEndpoints:
-    - matchLabels:
-        k8s:io.kubernetes.pod.namespace: external-secrets
-        app.kubernetes.io/instance: external-secrets-operator
-        app.kubernetes.io/name: external-secrets
-    toPorts:
-    - ports:
-      - port: "8087"
-        protocol: TCP
-      rules:
-        http:
-        - method: "GET"
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: external-secrets
+      ports:
+        - protocol: TCP
+          port: 8087
