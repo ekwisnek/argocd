@@ -12,6 +12,8 @@ spec:
     - helm:
         valuesObject:
           envoy:
+            extraArgs:
+              - --use-proxy-protocol
             service:
               type: NodePort
               nodePorts:
