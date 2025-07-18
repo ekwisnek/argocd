@@ -16,6 +16,12 @@ configs:
       name: argo-helm
       type: helm
       url: https://argoproj.github.io/argo-helm
+  rbac:
+    policy.csv: |
+      g, evankwisnek@gmail.com, role:admin
+    policy.default: role:readonly
+    policy.matchMode: glob
+    scopes: '[email, group]'
   cm:
     dex.config: |
       connectors:
