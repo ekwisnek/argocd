@@ -10,7 +10,7 @@ spec:
     directory:
       recurse: true
       exclude: credential-secret.yaml
-    path: /extra-manifests/bitwarden
+    path: extra-manifests/bitwarden
   destination:
     server: "https://kubernetes.default.svc"
     namespace: bitwarden
