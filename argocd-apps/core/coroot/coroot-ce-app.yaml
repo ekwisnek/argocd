@@ -23,7 +23,7 @@ spec:
             path: /
             tls:
               hosts:
-                - host: coroot.ctrlplane.net
+                - "coroot.ctrlplane.net"
               secretName: coroot-tls
           storage:
             size: 10Gi
