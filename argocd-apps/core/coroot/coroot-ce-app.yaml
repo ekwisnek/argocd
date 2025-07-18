@@ -22,9 +22,9 @@ spec:
               nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
             path: /
             tls:
-              - hosts:
+              hosts:
                 - host: coroot.ctrlplane.net
-                secretName: coroot-tls
+              secretName: coroot-tls
           storage:
             size: 10Gi
           prometheus:
