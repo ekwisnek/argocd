@@ -28,7 +28,7 @@ spec:
                 key: client-secret
               redirectUrl: https://workflows.ctrlplane.net/oauth2/callback
             ingress:
-              enabled: false
+              enabled: true
               annotations:
                 cert-manager.io/cluster-issuer: letsencrypt
                 kubernetes.io/tls-acme: "true"
