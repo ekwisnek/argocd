@@ -9,6 +9,8 @@ spec:
     server: https://kubernetes.default.svc
   project: core-infrastructure
   sources:
+    - repoURL: https://github.com/ekwisnek/argocd.git
+      path: extra-manifests/argo-workflows
     - repoURL: https://argoproj.github.io/argo-helm
       targetRevision: 0.45.10
       chart: argo-workflows
