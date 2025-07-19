@@ -27,13 +27,15 @@ spec:
                 name: argo-workflows-sso
                 key: client-secret
               redirectUrl: https://workflows.ctrlplane.net/oauth2/callback
+              scopes:
+                - groups
+              rbac:
+                enabled: true
             ingress:
               enabled: true
               annotations:
                 cert-manager.io/cluster-issuer: letsencrypt
                 kubernetes.io/tls-acme: "true"
-                # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-                # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
               ingressClassName: "nginx"
               hosts:
                 - workflows.ctrlplane.net
