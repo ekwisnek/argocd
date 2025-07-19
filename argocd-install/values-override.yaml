@@ -4,6 +4,12 @@ controller:
 dex:
   metrics:
     enabled: true
+  env:
+    - name: ARGO_WORKFLOWS_SSO_CLIENT_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: argo-workflows-sso
+          key: client-secret
 server:
   metrics:
     enabled: true
@@ -48,6 +54,12 @@ configs:
             clientSecret: $dex.github.clientSecret
             orgs:
             - name: ctrlplane
+      staticClients:
+        - id: argo-workflows-sso
+          name: Argo Workflow
+          redirectURIs:
+            - https://workflows.ctrlplane.net/oauth2/callback
+          secretEnv: ARGO_WORKFLOWS_SSO_CLIENT_SECRET
     resource.exclusions: |
         - apiGroups:
           - "*"
