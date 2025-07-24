@@ -5,7 +5,7 @@ This folder contains raw ArgoCD application manifests for managing deployments v
 ## Structure
 
 - `apps/` - Application manifests and related resources not part of core infrastructure
-- `core/` - Application manigests and related resources for core infrastructure
+- `core/` - Application manifests and related resources for core infrastructure
 - `README.md` - This documentation
 
 > Note: AppProjects are located in a separate folder.
