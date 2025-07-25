@@ -12,6 +12,8 @@ spec:
       chart: cert-manager
       helm:
         valuesObject:
+          config:
+            enableGatewayAPI: true
           featureGates: "AdditionalCertificateOutputFormats=true"
           disableAutoApproval: false
           webhook:
