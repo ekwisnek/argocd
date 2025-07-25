@@ -7,9 +7,9 @@ metadata:
 spec:
   project: core-infrastructure
   sources:
-    - repoURL: ghcr.io/nginx/charts/nginx-gateway-fabric
+    - repoURL: ghcr.io/nginx/charts
       targetRevision: 0.0.0-edge
-      path: .
+      chart: nginx-gateway-fabric
       helm:
         valuesObject: {}
     - repoURL: "https://github.com/ekwisnek/argocd.git"
