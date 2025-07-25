@@ -7,7 +7,7 @@ metadata:
 spec:
   project: core-infrastructure
   sources:
-    - repoURL: oci://ghcr.io/nginx/charts/nginx-gateway-fabric
+    - repoURL: ghcr.io/nginx/charts/nginx-gateway-fabric
       targetRevision: 0.0.0-edge
       path: .
       helm:
