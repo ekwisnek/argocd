@@ -1,0 +1,26 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ngf
+  namespace: argocd
+spec:
+  project: core-infrastructure
+  sources:
+    - repoURL: oci://ghcr.io/nginx/charts/nginx-gateway-fabric
+      targetRevision: 0.0.0-edge
+      path: .
+      helm:
+        valuesObject: {}
+    - repoURL: "https://github.com/ekwisnek/argocd.git"
+      targetRevision: HEAD
+      path: extra-manifests/nginx-gateway-fabric
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: nginx-gateway
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
