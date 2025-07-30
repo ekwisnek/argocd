@@ -1,0 +1,61 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vcluster-platform
+  namespace: argocd
+spec:
+  project: core-infrastructure
+  destination:
+    namespace: vcluster-platform
+    server: "https://kubernetes.default.svc"
+  source:
+    repoURL: "https://charts.loft.sh"
+    targetRevision: 4.3.4
+    chart: vcluster-platform
+    helm:
+      values: |
+        admin:
+          create: true
+          email: info@ctrlplane.net
+        config:
+          costControl:
+            enabled: false
+          loftHost: "vcluster-platform.ctrlplane.net"
+        ingress:
+          enabled: true
+          host: "vcluster-platform.ctrlplane.net"
+          name: vcluster-platform-ingress
+          annotations:
+            cert-manager.io/cluster-issuer: letsencrypt
+            nginx.ingress.kubernetes.io/from-to-www-redirect: 'true'
+          path: /
+          tls:
+            enabled: true
+            secret: vcluster-platform-tls
+        env:
+          DISABLE_LOFT_ROUTER: true
+        envValueFrom:
+          LICENSE_KEY:
+            secretKeyRef:
+              name: vcluster-platform-license
+              key: license-key
+        serviceMonitor:
+          enabled: false
+        tls:
+          enabled: true
+          secret: vcluster-platform-tls
+          crtKey: tls.crt
+          keyKey: tls.key
+        agentValues:
+          resources:
+            requests:
+              memory: 256Mi
+  syncPolicy:
+    applicationsSync: create-update
+    preserveResourcesOnDeletion: true
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
