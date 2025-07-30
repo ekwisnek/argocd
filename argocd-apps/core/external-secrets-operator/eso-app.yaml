@@ -9,6 +9,9 @@ spec:
     - repoURL: "https://charts.external-secrets.io"
       chart: external-secrets
       targetRevision: 0.9.19
+    - repoURL: "https://github.com/ekwisnek/argocd.git"
+      targetRevision: HEAD
+      path: extra-manifests/external-secrets-operator
   destination:
     server: "https://kubernetes.default.svc"
     namespace: external-secrets
