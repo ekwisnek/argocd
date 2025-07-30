@@ -33,13 +33,13 @@ spec:
           tls:
             enabled: true
             secret: vcluster-platform-tls
-        env:
-          DISABLE_LOFT_ROUTER: true
-        envValueFrom:
-          LICENSE_KEY:
-            secretKeyRef:
-              name: vcluster-platform-license
-              key: license-key
+        # env:
+        #   DISABLE_LOFT_ROUTER: true
+        # envValueFrom:
+        #   LICENSE_KEY:
+        #     secretKeyRef:
+        #       name: vcluster-platform-license
+        #       key: license-key
         serviceMonitor:
           enabled: false
         tls:
