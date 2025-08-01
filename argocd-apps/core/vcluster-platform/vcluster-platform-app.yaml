@@ -52,8 +52,6 @@ spec:
             requests:
               memory: 256Mi
   syncPolicy:
-    applicationsSync: create-update
-    preserveResourcesOnDeletion: true
     automated:
       prune: true
       selfHeal: true
