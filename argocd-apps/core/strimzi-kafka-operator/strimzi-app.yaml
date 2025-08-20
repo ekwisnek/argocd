@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argo-workflows
+  namespace: argocd
+spec:
+  destination:
+    namespace: strimzi-kafka-operator
+    server: https://kubernetes.default.svc
+  project: core-infrastructure
+  sources:
+    - repoURL: https://github.com/ekwisnek/argocd.git
+      path: extra-manifests/strimzi-kafka-operator
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
