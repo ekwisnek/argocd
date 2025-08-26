@@ -65,6 +65,15 @@ configs:
           - "*"
           kinds:
           - ProviderConfigUsage
+        - apiGroups:
+            - kyverno.io
+          kinds:
+            - AdmissionReport
+            - BackgroundScanReport
+            - ClusterAdmissionReport
+            - ClusterBackgroundScanReport
+          clusters:
+            - '*'
     resource.compareoptions: |
       # disables status field diffing in specified resource types
       ignoreAggregatedRoles: true
