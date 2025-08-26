@@ -11,7 +11,7 @@ spec:
       targetRevision: 0.18.2
       helm:
         valuesObject:
-          installCRDs: true
+          installCRDs: false
     - repoURL: "https://github.com/ekwisnek/argocd.git"
       targetRevision: HEAD
       path: extra-manifests/external-secrets-operator
