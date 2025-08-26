@@ -8,10 +8,10 @@ spec:
   sources:
     - repoURL: "https://charts.external-secrets.io"
       chart: external-secrets
-      targetRevision: 0.18.2
+      targetRevision: 0.19.2
       helm:
         valuesObject:
-          installCRDs: false
+          installCRDs: true
     - repoURL: "https://github.com/ekwisnek/argocd.git"
       targetRevision: HEAD
       path: extra-manifests/external-secrets-operator
@@ -24,3 +24,4 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true
