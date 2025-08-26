@@ -12,9 +12,20 @@ spec:
       helm:
         valuesObject:
           installCRDs: true
+      kustomize:
+          patches:
+          - target:
+              kind: CustomResourceDefinition
+              name: externalsecrets.external-secrets.io
+            patch: |-
+              - op: replace
+                path: /spec/versions/1/served
+                value: true
     - repoURL: "https://github.com/ekwisnek/argocd.git"
       targetRevision: HEAD
       path: extra-manifests/external-secrets-operator
+      directory:
+        recurse: false
   destination:
     server: "https://kubernetes.default.svc"
     namespace: external-secrets
