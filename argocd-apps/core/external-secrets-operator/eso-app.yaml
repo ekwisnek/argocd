@@ -12,11 +12,6 @@ spec:
       helm:
         valuesObject:
           installCRDs: true
-        release-name: external-secrets
-      ref: eso
-    - repoURL: "https://github.com/ekwisnek/argocd.git"
-      path: extra-manifests/external-secrets-operator/kustomize
-      targetRevision: main
     - repoURL: "https://github.com/ekwisnek/argocd.git"
       targetRevision: HEAD
       path: extra-manifests/external-secrets-operator
