@@ -16,7 +16,7 @@ spec:
         values: |
           trivy:
             storageClassEnabled: true
-            storageClassName: "default"
+            storageClassName: "local-path"
             storageSize: "5Gi"
             severity: HIGH,CRITICAL,MEDIUM,LOW,UNKNOWN
             slow: false
