@@ -12,6 +12,17 @@ spec:
     - repoURL: https://aquasecurity.github.io/helm-charts/
       targetRevision: 0.29.3
       chart: trivy-operator
+      helm:
+        values: |
+          trivy:
+            mode: ClientServer
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 1Gi
   syncPolicy:
     automated:
       prune: true
