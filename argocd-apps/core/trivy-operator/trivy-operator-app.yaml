@@ -15,6 +15,12 @@ spec:
       helm:
         values: |
           trivy:
+            storageClassEnabled: true
+            storageClassName: "default"
+            storageSize: "5Gi"
+            severity: HIGH,CRITICAL,MEDIUM,LOW,UNKNOWN
+            slow: false
+            ignoreUnfixed: true
             mode: ClientServer
           resources:
             requests:
@@ -23,6 +29,30 @@ spec:
             limits:
               cpu: 500m
               memory: 1Gi
+          operator:
+            builtInTrivyServer: true
+            replicas: 1
+            configAuditScannerEnabled: true
+            rbacAssessmentScannerEnabled: true
+            infraAssessmentScannerEnabled: true
+            clusterComplianceEnabled: true
+            exposedSecretScannerEnabled: true
+            metricsFindingsEnabled: true
+            metricsVulnIdEnabled: true
+            metricsExposedSecretInfo: true
+            metricsConfigAuditInfo: true
+            metricsRbacAssessmentInfo: true
+            metricsInfraAssessmentInfo: true
+            metricsImageInfo: true
+            metricsClusterComplianceInfo: true
+          securityContext:
+            runAsNonRoot: true
+            privileged: false
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
   syncPolicy:
     automated:
       prune: true
