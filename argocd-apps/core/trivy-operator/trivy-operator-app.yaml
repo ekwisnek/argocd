@@ -10,18 +10,14 @@ spec:
   project: core-infrastructure
   sources:
     - repoURL: https://aquasecurity.github.io/helm-charts/
-      targetRevision: 0.29.3
+      targetRevision: 0.30.0
       chart: trivy-operator
       helm:
         values: |
           trivy:
-            storageClassEnabled: true
-            storageClassName: "local-path"
-            storageSize: "5Gi"
             severity: HIGH,CRITICAL,MEDIUM,LOW,UNKNOWN
             slow: false
             ignoreUnfixed: true
-            mode: ClientServer
           resources:
             requests:
               cpu: 100m
@@ -30,7 +26,6 @@ spec:
               cpu: 500m
               memory: 1Gi
           operator:
-            builtInTrivyServer: true
             replicas: 1
             configAuditScannerEnabled: true
             rbacAssessmentScannerEnabled: true
