@@ -15,6 +15,117 @@ spec:
           crds:
             migration:
               enabled: false
+          admissionController:
+            rbac:
+              clusterRole:
+                extraResources:
+                  - apiGroups:
+                      - ""
+                    resources:
+                      - secrets
+                    verbs:
+                      - get
+                      - list
+                      - watch
+                      - update
+                      - create
+                      - patch
+                      - delete
+          backgroundController:
+            securityContext:
+              runAsNonRoot: true
+              privileged: false
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+              seccompProfile:
+                type: RuntimeDefault
+              runAsUser: 1000
+            rbac:
+              clusterRole:
+                extraResources:
+                  - apiGroups:
+                      - batch
+                    resources:
+                      - jobs
+                    verbs:
+                      - create
+                      - update
+                      - delete
+                  - apiGroups:
+                      - apps
+                    resources:
+                      - statefulsets
+                      - deployments
+                    verbs:
+                      - get
+                      - list
+                      - watch
+                      - create
+                      - update
+                      - patch
+                  - apiGroups:
+                      - ""
+                    resources:
+                      - pods
+                    verbs:
+                      - update
+                      - get
+                      - list
+                      - watch
+                      - create
+                      - patch
+                  - apiGroups:
+                      - ""
+                    resources:
+                      - secrets
+                      - configmaps
+                    verbs:
+                      - get
+                      - list
+                      - watch
+                      - update
+                      - create
+                      - patch
+                      - delete
+          cleanupController:
+            securityContext:
+              runAsNonRoot: true
+              privileged: false
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+              seccompProfile:
+                type: RuntimeDefault
+              runAsUser: 1000
+            rbac:
+              clusterRole:
+                extraResources:
+                  - apiGroups:
+                      - apps
+                    resources:
+                      - replicasets
+                    verbs:
+                      - get
+                      - list
+                      - watch
+                      - delete
+          reportsController:
+            securityContext:
+              runAsNonRoot: true
+              privileged: false
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+              seccompProfile:
+                type: RuntimeDefault
+              runAsUser: 1000
     - repoURL: "https://github.com/ekwisnek/argocd.git"
       targetRevision: HEAD
       path: extra-manifests/kyverno-policies
