@@ -11,6 +11,10 @@ spec:
   sources:
     - helm:
         valuesObject:
+          configs:
+            jetstream:
+              streamConfig:
+                maxBytes: 1GB
           extraObjects:
             - |
               apiVersion: argoproj.io/v1alpha1
