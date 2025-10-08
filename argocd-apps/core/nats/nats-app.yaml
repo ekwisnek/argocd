@@ -42,7 +42,7 @@ spec:
             gateway:
               enabled: false
             resolver:
-              enabled: true
+              enabled: false
               merge:
                 type: full
                 allow_delete: false
