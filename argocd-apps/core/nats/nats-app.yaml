@@ -13,132 +13,41 @@ spec:
         valuesObject:
           tlsCA:
             enabled: false
-            configMapName:
-            secretName:
-            dir: /etc/nats-ca-cert
-            key: ca.crt
           config:
             cluster:
               enabled: false
-              port: 6222
-              replicas: 3
-              routeURLs:
-                user:
-                password:
-                useFQDN: false
-                k8sClusterDomain: cluster.local
               tls:
                 enabled: false
-                secretName:
-                dir: /etc/nats-certs/cluster
-                cert: tls.crt
-                key: tls.key
-                merge: {}
-                patch: []
-              merge: {}
-              patch: []
             jetstream:
-              enabled: false
+              enabled: true
               fileStore:
                 enabled: true
                 dir: /data
                 pvc:
                   enabled: true
                   size: 10Gi
-                  storageClassName:
-                  merge: {}
-                  patch: []
-                  name:
-                maxSize:
               memoryStore:
-                enabled: false
+                enabled: true
                 maxSize: 1Gi
-              merge: {}
-              patch: []
             nats:
               port: 4222
-              tls:
-                enabled: false
-                secretName:
-                dir: /etc/nats-certs/nats
-                cert: tls.crt
-                key: tls.key
-                merge: {}
-                patch: []
             leafnodes:
               enabled: false
-              port: 7422
-              tls:
-                enabled: false
-                secretName:
-                dir: /etc/nats-certs/leafnodes
-                cert: tls.crt
-                key: tls.key
-                merge: {}
-                patch: []
-              merge: {}
-              patch: []
             websocket:
               enabled: false
-              port: 8080
-              tls:
-                enabled: false
-                secretName:
-                dir: /etc/nats-certs/websocket
-                cert: tls.crt
-                key: tls.key
-                merge: {}
-                patch: []
               ingress:
                 enabled: false
-                hosts: []
-                path: /
-                pathType: Exact
-                className:
-                tlsSecretName:
-                merge: {}
-                patch: []
-                name:
-              merge: {}
-              patch: []
             mqtt:
               enabled: false
-              port: 1883
-              tls:
-                enabled: false
-                secretName:
-                dir: /etc/nats-certs/mqtt
-                cert: tls.crt
-                key: tls.key
-                merge: {}
-                patch: []
-              merge: {}
-              patch: []
             gateway:
               enabled: false
-              port: 7222
-              tls:
-                enabled: false
-                secretName:
-                dir: /etc/nats-certs/gateway
-                cert: tls.crt
-                key: tls.key
-                merge: {}
-                patch: []
-              merge: {}
-              patch: []
             resolver:
-              enabled: false
-              dir: /data/resolver
-              pvc:
-                enabled: true
-                size: 1Gi
-                storageClassName:
-                merge: {}
-                patch: []
-                name:
-              merge: {}
-              patch: []
+              enabled: true
+              merge:
+                type: full
+                allow_delete: false
+                interval: "2m"
+                timeout: "1.9s"
             #   env:
             #     GOMEMLIMIT: 7GiB
             #     TOKEN:
@@ -147,105 +56,8 @@ spec:
             #           name: nats-auth
             #           key: token
             env: {}
-          promExporter:
-            enabled: false
-            image:
-              repository: natsio/prometheus-nats-exporter
-              tag: 0.17.3
-              pullPolicy:
-              registry:
-              digest:
-              fullImageName:
-            port: 7777
-            monitorDomain: localhost
-            env: {}
-            merge: {}
-            patch: []
-            podMonitor:
-              enabled: false
-              merge: {}
-              patch: []
-              name:
-          statefulSet:
-            merge: {}
-            patch: []
-            name:
-          podTemplate:
-            configChecksumAnnotation: true
-            topologySpreadConstraints: {}
-            merge: {}
-            patch: []
-          headlessService:
-            merge: {}
-            patch: []
-            name:
-          configMap:
-            merge: {}
-            patch: []
-            name:
-          podDisruptionBudget:
-            enabled: true
-            merge: {}
-            patch: []
-            name:
-          serviceAccount:
-            enabled: false
-            merge: {}
-            patch: []
-            name:
           natsBox:
-            enabled: true
-            contexts:
-              default:
-                creds:
-                  contents:
-                  secretName:
-                  dir:
-                  key: nats.creds
-                nkey:
-                  contents:
-                  secretName:
-                  dir:
-                  key: nats.nk
-                tls:
-                  secretName:
-                  dir:
-                  cert: tls.crt
-                  key: tls.key
-                merge: {}
-                patch: []
-            defaultContextName: default
-            container:
-              image:
-                repository: natsio/nats-box
-                tag: 0.18.0
-                pullPolicy:
-                registry:
-                digest:
-                fullImageName:
-              env: {}
-              merge: {}
-              patch: []
-            deployment:
-              merge: {}
-              patch: []
-              name:
-            podTemplate:
-              merge: {}
-              patch: []
-            contextsSecret:
-              merge: {}
-              patch: []
-              name:
-            contentsSecret:
-              merge: {}
-              patch: []
-              name:
-            serviceAccount:
-              enabled: false
-              merge: {}
-              patch: []
-              name:
+            enabled: false
 
           ################################################################################
           # Extra user-defined resources
