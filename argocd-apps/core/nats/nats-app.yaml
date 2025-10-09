@@ -20,6 +20,9 @@ spec:
           tlsCA:
             enabled: false
           config:
+            merge:
+              authorization:
+                token: $2a$11$oyqVXUT7L3W/9IWV9v6JCelsBJqm67cg6fFmJyWmrZWKoyC4GzTF6
             cluster:
               enabled: false
               tls:
