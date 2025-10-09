@@ -88,8 +88,6 @@ spec:
                   - client auth
                 dnsNames:
                   - nats.ctrlplane.net
-                ipAddresses:
-                  - 192.168.1.245
                 issuerRef:
                   name: letsencrypt
                   kind: ClusterIssuer
