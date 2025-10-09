@@ -12,7 +12,7 @@ spec:
     - repoURL: https://github.com/ekwisnek/argocd.git
       path: extra-manifests/argo-workflows
     - repoURL: https://argoproj.github.io/argo-helm
-      targetRevision: 0.45.10
+      targetRevision: 0.45.26
       chart: argo-workflows
       helm:
         valuesObject:
