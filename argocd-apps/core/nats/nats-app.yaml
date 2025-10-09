@@ -96,7 +96,7 @@ spec:
               metadata:
                 name: nats-public
               spec:
-                type: LoadBalancer
+                type: NodePort
                 selector:
                   app.kubernetes.io/component: nats
                   app.kubernetes.io/instance: nats
@@ -104,6 +104,7 @@ spec:
                 ports:
                   - port: 4222
                     targetPort: 4222
+                    nodePort: 31222
   destination:
     server: "https://kubernetes.default.svc"
     namespace: nats
