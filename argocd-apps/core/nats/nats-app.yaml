@@ -12,10 +12,7 @@ spec:
       helm:
         valuesObject:
           tlsCA:
-            enabled: true
-            secretName: nats-ctrlplane-net-tls
-            dir: /etc/nats-ca-cert
-            key: ca.crt
+            enabled: false
           config:
             cluster:
               enabled: false
