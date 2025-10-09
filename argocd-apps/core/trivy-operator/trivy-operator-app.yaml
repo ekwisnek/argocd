@@ -10,44 +10,8 @@ spec:
   project: core-infrastructure
   sources:
     - repoURL: https://aquasecurity.github.io/helm-charts/
-      targetRevision: 0.30.0
+      targetRevision: 0.31.0
       chart: trivy-operator
-      helm:
-        values: |
-          trivy:
-            severity: HIGH,CRITICAL,MEDIUM,LOW,UNKNOWN
-            slow: false
-            ignoreUnfixed: true
-          resources:
-            requests:
-              cpu: 100m
-              memory: 256Mi
-            limits:
-              cpu: 500m
-              memory: 1Gi
-          operator:
-            replicas: 1
-            configAuditScannerEnabled: true
-            rbacAssessmentScannerEnabled: true
-            infraAssessmentScannerEnabled: true
-            clusterComplianceEnabled: true
-            exposedSecretScannerEnabled: true
-            metricsFindingsEnabled: true
-            metricsVulnIdEnabled: true
-            metricsExposedSecretInfo: true
-            metricsConfigAuditInfo: true
-            metricsRbacAssessmentInfo: true
-            metricsInfraAssessmentInfo: true
-            metricsImageInfo: true
-            metricsClusterComplianceInfo: true
-          securityContext:
-            runAsNonRoot: true
-            privileged: false
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
-            capabilities:
-              drop:
-                - ALL
   syncPolicy:
     automated:
       prune: true
