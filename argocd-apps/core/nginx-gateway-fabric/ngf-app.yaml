@@ -1,30 +1,30 @@
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: ngf
-  namespace: argocd
-spec:
-  project: core-infrastructure
-  sources:
-    - repoURL: ghcr.io/nginx/charts
-      targetRevision: 0.0.0-edge
-      chart: nginx-gateway-fabric
-      helm:
-        valuesObject:
-          nginxGateway:
-            gwAPIExperimentalFeatures:
-              enable: true
-    - repoURL: "https://github.com/ekwisnek/argocd.git"
-      targetRevision: HEAD
-      path: extra-manifests/nginx-gateway-fabric
-  destination:
-    server: "https://kubernetes.default.svc"
-    namespace: nginx-gateway
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
-      - ServerSideApply=true
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: ngf
+#   namespace: argocd
+# spec:
+#   project: core-infrastructure
+#   sources:
+#     - repoURL: ghcr.io/nginx/charts
+#       targetRevision: 0.0.0-edge
+#       chart: nginx-gateway-fabric
+#       helm:
+#         valuesObject:
+#           nginxGateway:
+#             gwAPIExperimentalFeatures:
+#               enable: true
+#     - repoURL: "https://github.com/ekwisnek/argocd.git"
+#       targetRevision: HEAD
+#       path: extra-manifests/nginx-gateway-fabric
+#   destination:
+#     server: "https://kubernetes.default.svc"
+#     namespace: nginx-gateway
+#   syncPolicy:
+#     automated:
+#       prune: true
+#       selfHeal: true
+#     syncOptions:
+#       - CreateNamespace=true
+#       - ServerSideApply=true
