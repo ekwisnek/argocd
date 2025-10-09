@@ -18,21 +18,22 @@ spec:
         valuesObject:
           server:
             authModes:
-              - sso
-            sso:
-              enabled: true
-              issuer: https://argocd.ctrlplane.net/api/dex
-              clientId:
-                name: argo-workflows-sso
-                key: client-id
-              clientSecret:
-                name: argo-workflows-sso
-                key: client-secret
-              redirectUrl: https://workflows.ctrlplane.net/oauth2/callback
-              scopes:
-                - groups
-              rbac:
-                enabled: true
+              # - sso
+              - client
+            # sso:
+            #   enabled: true
+            #   issuer: https://argocd.ctrlplane.net/api/dex
+            #   clientId:
+            #     name: argo-workflows-sso
+            #     key: client-id
+            #   clientSecret:
+            #     name: argo-workflows-sso
+            #     key: client-secret
+            #   redirectUrl: https://workflows.ctrlplane.net/oauth2/callback
+            #   scopes:
+            #     - groups
+            #   rbac:
+            #     enabled: true
             ingress:
               enabled: true
               annotations:
