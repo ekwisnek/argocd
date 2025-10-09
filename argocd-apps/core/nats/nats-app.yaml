@@ -12,7 +12,8 @@ spec:
       helm:
         valuesObject:
           tlsCA:
-            enabled: false
+            enabled: true
+            secretName: nats-ctrlplane-net-tls
           config:
             cluster:
               enabled: false
@@ -31,6 +32,9 @@ spec:
                 maxSize: 1Gi
             nats:
               port: 4222
+              tls:
+                enabled: true
+                secretName: nats-ctrlplane-net-tls
             leafnodes:
               enabled: false
             websocket:
@@ -58,50 +62,43 @@ spec:
             env: {}
           natsBox:
             enabled: false
-
-          ################################################################################
-          # Extra user-defined resources
-          ################################################################################
-          #
-          # add arbitrary user-generated resources
-          # example:
-          #
-          # config:
-          #   websocket:
-          #     enabled: true
-          # extraResources:
-          # - apiVersion: networking.istio.io/v1beta1
-          #   kind: VirtualService
-          #   metadata:
-          #     name:
-          #       $tplYaml: >
-          #         {{ include "nats.fullname" $ | quote }}
-          #     labels:
-          #       $tplYaml: |
-          #         {{ include "nats.labels" $ }}
-          #   spec:
-          #     hosts:
-          #     - demo.nats.io
-          #     gateways:
-          #     - my-gateway
-          #     http:
-          #     - name: default
-          #       match:
-          #       - name: root
-          #         uri:
-          #           exact: /
-          #       route:
-          #       - destination:
-          #           host:
-          #             $tplYaml: >
-          #               {{ .Values.service.name | quote }}
-          #           port:
-          #             number:
-          #               $tplYaml: >
-          #                 {{ .Values.config.websocket.port }}
-          #
-          extraResources: []
-
+          extraResources:
+            - apiVersion: cert-manager.io/v1
+              kind: Certificate
+              metadata:
+                name: nats-ctrlplane-net-tls
+                namespace: nats
+              spec:
+                secretName: nats-ctrlplane-net-tls
+                duration: 2160h0m0s # 90d
+                renewBefore: 360h0m0s # 15d
+                subject:
+                  organizations:
+                    - ctrlplane
+                commonName: nats.ctrlplane.net
+                privateKey:
+                  algorithm: ECDSA
+                usages:
+                  - server auth
+                  - client auth
+                dnsNames:
+                  - nats.ctrlplane.net
+                issuerRef:
+                  name: letsencrypt
+                  kind: ClusterIssuer
+            - apiVersion: v1
+              kind: Service
+              metadata:
+                name: nats-public
+              spec:
+                type: LoadBalancer
+                selector:
+                  app.kubernetes.io/component: nats
+                  app.kubernetes.io/instance: nats
+                  app.kubernetes.io/name: nats
+                ports:
+                  - port: 4222
+                    targetPort: 4222
   destination:
     server: "https://kubernetes.default.svc"
     namespace: nats
