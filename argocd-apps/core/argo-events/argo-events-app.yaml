@@ -5,7 +5,7 @@ metadata:
   namespace: argocd
 spec:
   destination:
-    namespace: argo-events
+    namespace: argo
     server: https://kubernetes.default.svc
   project: core-infrastructure
   sources:
@@ -22,7 +22,7 @@ spec:
               metadata:
                 argocd.argoproj.io/sync-wave: "5"
                 name: nats-js-eventbus
-                namespace: argo-events
+                namespace: argo
               spec:
                 jetstream:
                   version: latest
