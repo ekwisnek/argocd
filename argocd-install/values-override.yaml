@@ -243,7 +243,7 @@ extraObjects:
             valueFiles:
               - $values/argocd-install/values-override.yaml
           repoURL: https://argoproj.github.io/argo-helm
-          targetRevision: 8.5.8
+          targetRevision: 9.1.6
           chart: argo-cd
         - repoURL: https://github.com/ekwisnek/argocd.git
           ref: values
