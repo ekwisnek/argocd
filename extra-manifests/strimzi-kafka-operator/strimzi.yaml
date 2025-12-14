@@ -2091,7 +2091,7 @@ spec:
             name: strimzi-cluster-operator
       containers:
         - name: strimzi-cluster-operator
-          image: 'quay.io/strimzi/operator:0.47.0'
+          image: 'quay.io/strimzi/operator:0.49.1'
           ports:
             - containerPort: 8080
               name: http

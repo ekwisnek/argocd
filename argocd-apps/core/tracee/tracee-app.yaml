@@ -10,7 +10,7 @@ spec:
   project: core-infrastructure
   sources:
     - repoURL: https://aquasecurity.github.io/helm-charts/
-      targetRevision: 0.23.2
+      targetRevision: 0.24.1
       chart: tracee
   syncPolicy:
     automated:

@@ -8,7 +8,7 @@ spec:
   project: core-infrastructure
   sources:
     - repoURL: "https://coroot.github.io/helm-charts"
-      targetRevision: 0.4.2
+      targetRevision: 0.4.9
       chart: coroot-operator
   destination:
     server: "https://kubernetes.default.svc"
