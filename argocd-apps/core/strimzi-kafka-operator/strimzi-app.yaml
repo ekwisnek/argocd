@@ -9,8 +9,8 @@ spec:
     server: https://kubernetes.default.svc
   project: core-infrastructure
   sources:
-    - repoURL: https://github.com/ekwisnek/argocd.git
-      path: extra-manifests/strimzi-kafka-operator
+    - repoURL: oci://quay.io/strimzi-helm
+      chart: strimzi-kafka-operator
   syncPolicy:
     automated:
       prune: true
