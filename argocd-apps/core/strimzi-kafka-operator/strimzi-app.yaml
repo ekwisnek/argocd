@@ -12,6 +12,8 @@ spec:
     - repoURL: oci://quay.io/strimzi-helm/strimzi-kafka-operator
       chart: strimzi-kafka-operator
       targetRevision: 0.49.0
+      helm:
+        skipCrds: true
   syncPolicy:
     automated:
       prune: true
