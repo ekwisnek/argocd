@@ -9,9 +9,9 @@ spec:
     namespace: strimzi-kafka-operator
     server: https://kubernetes.default.svc
   sources:
-    - repoURL: oci://quay.io/strimzi-helm
+    - repoURL: oci://quay.io/strimzi-helm/strimzi-kafka-operator
       chart: strimzi-kafka-operator
-      targetRevision: 0.49.1
+      targetRevision: 0.49.0
   syncPolicy:
     automated:
       prune: true
