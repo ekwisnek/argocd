@@ -32,6 +32,12 @@ spec:
                       - patch
                       - delete
           backgroundController:
+            resources:
+              limits:
+                memory: 512Mi
+              requests:
+                cpu: 100m
+                memory: 64Mi
             securityContext:
               runAsNonRoot: true
               privileged: false
@@ -91,6 +97,12 @@ spec:
                       - patch
                       - delete
           cleanupController:
+            resources:
+              limits:
+                memory: 512Mi
+              requests:
+                cpu: 100m
+                memory: 64Mi
             securityContext:
               runAsNonRoot: true
               privileged: false
@@ -115,6 +127,12 @@ spec:
                       - watch
                       - delete
           reportsController:
+            resources:
+              limits:
+                memory: 512Mi
+              requests:
+                cpu: 100m
+                memory: 64Mi
             securityContext:
               runAsNonRoot: true
               privileged: false
