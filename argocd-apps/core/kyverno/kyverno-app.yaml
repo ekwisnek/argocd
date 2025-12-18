@@ -12,9 +12,33 @@ spec:
       chart: kyverno
       helm:
         values: |
-          crds:
-            migration:
+          features:
+            admissionReports:
+              enabled: true
+            aggregateReports:
+              enabled: true
+            policyReports:
+              enabled: true
+            validatingAdmissionPolicyReports:
+              enabled: true
+            mutatingAdmissionPolicyReports:
               enabled: false
+            reporting:
+              validate: true
+              mutate: true
+              mutateExisting: true
+              imageVerify: true
+              generate: true
+            autoUpdateWebhooks:
+              enabled: true
+            backgroundScan:
+              enabled: true
+              backgroundScanWorkers: 2
+              backgroundScanInterval: 1h
+              skipResourceFilters: true
+            logging:
+              format: text
+              verbosity: 2
           admissionController:
             rbac:
               clusterRole:
