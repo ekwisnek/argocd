@@ -1,186 +1,186 @@
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: kyverno
-  namespace: argocd
-spec:
-  project: core-infrastructure
-  sources:
-    - repoURL: "https://kyverno.github.io/kyverno"
-      targetRevision: 3.6.1
-      chart: kyverno
-      helm:
-        values: |
-          features:
-            admissionReports:
-              enabled: true
-            aggregateReports:
-              enabled: true
-            policyReports:
-              enabled: true
-            validatingAdmissionPolicyReports:
-              enabled: true
-            mutatingAdmissionPolicyReports:
-              enabled: false
-            reporting:
-              validate: true
-              mutate: true
-              mutateExisting: true
-              imageVerify: true
-              generate: true
-            autoUpdateWebhooks:
-              enabled: true
-            backgroundScan:
-              enabled: true
-              backgroundScanWorkers: 2
-              backgroundScanInterval: 1h
-              skipResourceFilters: true
-            logging:
-              format: text
-              verbosity: 2
-          admissionController:
-            rbac:
-              clusterRole:
-                extraResources:
-                  - apiGroups:
-                      - ""
-                    resources:
-                      - secrets
-                    verbs:
-                      - get
-                      - list
-                      - watch
-                      - update
-                      - create
-                      - patch
-                      - delete
-          backgroundController:
-            resources:
-              limits:
-                memory: 512Mi
-              requests:
-                cpu: 100m
-                memory: 64Mi
-            securityContext:
-              runAsNonRoot: true
-              privileged: false
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - ALL
-              seccompProfile:
-                type: RuntimeDefault
-              runAsUser: 1000
-            rbac:
-              clusterRole:
-                extraResources:
-                  - apiGroups:
-                      - batch
-                    resources:
-                      - jobs
-                    verbs:
-                      - create
-                      - update
-                      - delete
-                  - apiGroups:
-                      - apps
-                    resources:
-                      - statefulsets
-                      - deployments
-                    verbs:
-                      - get
-                      - list
-                      - watch
-                      - create
-                      - update
-                      - patch
-                  - apiGroups:
-                      - ""
-                    resources:
-                      - pods
-                    verbs:
-                      - update
-                      - get
-                      - list
-                      - watch
-                      - create
-                      - patch
-                  - apiGroups:
-                      - ""
-                    resources:
-                      - secrets
-                      - configmaps
-                    verbs:
-                      - get
-                      - list
-                      - watch
-                      - update
-                      - create
-                      - patch
-                      - delete
-          cleanupController:
-            resources:
-              limits:
-                memory: 512Mi
-              requests:
-                cpu: 100m
-                memory: 64Mi
-            securityContext:
-              runAsNonRoot: true
-              privileged: false
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - ALL
-              seccompProfile:
-                type: RuntimeDefault
-              runAsUser: 1000
-            rbac:
-              clusterRole:
-                extraResources:
-                  - apiGroups:
-                      - apps
-                    resources:
-                      - replicasets
-                    verbs:
-                      - get
-                      - list
-                      - watch
-                      - delete
-          reportsController:
-            resources:
-              limits:
-                memory: 512Mi
-              requests:
-                cpu: 100m
-                memory: 64Mi
-            securityContext:
-              runAsNonRoot: true
-              privileged: false
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - ALL
-              seccompProfile:
-                type: RuntimeDefault
-              runAsUser: 1000
-    - repoURL: "https://github.com/ekwisnek/argocd.git"
-      targetRevision: HEAD
-      path: extra-manifests/kyverno-policies
-      directory:
-        recurse: false
-  destination:
-    server: "https://kubernetes.default.svc"
-    namespace: kyverno
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
-      - ServerSideApply=true
-      - Replace=true
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: kyverno
+#   namespace: argocd
+# spec:
+#   project: core-infrastructure
+#   sources:
+#     - repoURL: "https://kyverno.github.io/kyverno"
+#       targetRevision: 3.6.1
+#       chart: kyverno
+#       helm:
+#         values: |
+#           features:
+#             admissionReports:
+#               enabled: true
+#             aggregateReports:
+#               enabled: true
+#             policyReports:
+#               enabled: true
+#             validatingAdmissionPolicyReports:
+#               enabled: true
+#             mutatingAdmissionPolicyReports:
+#               enabled: false
+#             reporting:
+#               validate: true
+#               mutate: true
+#               mutateExisting: true
+#               imageVerify: true
+#               generate: true
+#             autoUpdateWebhooks:
+#               enabled: true
+#             backgroundScan:
+#               enabled: true
+#               backgroundScanWorkers: 2
+#               backgroundScanInterval: 1h
+#               skipResourceFilters: true
+#             logging:
+#               format: text
+#               verbosity: 2
+#           admissionController:
+#             rbac:
+#               clusterRole:
+#                 extraResources:
+#                   - apiGroups:
+#                       - ""
+#                     resources:
+#                       - secrets
+#                     verbs:
+#                       - get
+#                       - list
+#                       - watch
+#                       - update
+#                       - create
+#                       - patch
+#                       - delete
+#           backgroundController:
+#             resources:
+#               limits:
+#                 memory: 512Mi
+#               requests:
+#                 cpu: 100m
+#                 memory: 64Mi
+#             securityContext:
+#               runAsNonRoot: true
+#               privileged: false
+#               allowPrivilegeEscalation: false
+#               readOnlyRootFilesystem: true
+#               capabilities:
+#                 drop:
+#                   - ALL
+#               seccompProfile:
+#                 type: RuntimeDefault
+#               runAsUser: 1000
+#             rbac:
+#               clusterRole:
+#                 extraResources:
+#                   - apiGroups:
+#                       - batch
+#                     resources:
+#                       - jobs
+#                     verbs:
+#                       - create
+#                       - update
+#                       - delete
+#                   - apiGroups:
+#                       - apps
+#                     resources:
+#                       - statefulsets
+#                       - deployments
+#                     verbs:
+#                       - get
+#                       - list
+#                       - watch
+#                       - create
+#                       - update
+#                       - patch
+#                   - apiGroups:
+#                       - ""
+#                     resources:
+#                       - pods
+#                     verbs:
+#                       - update
+#                       - get
+#                       - list
+#                       - watch
+#                       - create
+#                       - patch
+#                   - apiGroups:
+#                       - ""
+#                     resources:
+#                       - secrets
+#                       - configmaps
+#                     verbs:
+#                       - get
+#                       - list
+#                       - watch
+#                       - update
+#                       - create
+#                       - patch
+#                       - delete
+#           cleanupController:
+#             resources:
+#               limits:
+#                 memory: 512Mi
+#               requests:
+#                 cpu: 100m
+#                 memory: 64Mi
+#             securityContext:
+#               runAsNonRoot: true
+#               privileged: false
+#               allowPrivilegeEscalation: false
+#               readOnlyRootFilesystem: true
+#               capabilities:
+#                 drop:
+#                   - ALL
+#               seccompProfile:
+#                 type: RuntimeDefault
+#               runAsUser: 1000
+#             rbac:
+#               clusterRole:
+#                 extraResources:
+#                   - apiGroups:
+#                       - apps
+#                     resources:
+#                       - replicasets
+#                     verbs:
+#                       - get
+#                       - list
+#                       - watch
+#                       - delete
+#           reportsController:
+#             resources:
+#               limits:
+#                 memory: 512Mi
+#               requests:
+#                 cpu: 100m
+#                 memory: 64Mi
+#             securityContext:
+#               runAsNonRoot: true
+#               privileged: false
+#               allowPrivilegeEscalation: false
+#               readOnlyRootFilesystem: true
+#               capabilities:
+#                 drop:
+#                   - ALL
+#               seccompProfile:
+#                 type: RuntimeDefault
+#               runAsUser: 1000
+#     - repoURL: "https://github.com/ekwisnek/argocd.git"
+#       targetRevision: HEAD
+#       path: extra-manifests/kyverno-policies
+#       directory:
+#         recurse: false
+#   destination:
+#     server: "https://kubernetes.default.svc"
+#     namespace: kyverno
+#   syncPolicy:
+#     automated:
+#       prune: true
+#       selfHeal: true
+#     syncOptions:
+#       - CreateNamespace=true
+#       - ServerSideApply=true
+#       - Replace=true
